@@ -1,0 +1,15 @@
+{
+  "name": "eventemitter",
+  "description": "Nodejs implementation of EventEmitter",
+  "version": "0.3.2",
+  "keywords": [ "" ],
+  "maintainers": [
+    { "name": "Elijah Insua", "web": "http://tmpvar.com" }
+  ],
+  "licenses": [ "MIT" ],
+  "repositories": {
+    "type": "git",
+    "url": "http://github.com/tmpvar/node-eventemitter.git"
+  }
+}
+
