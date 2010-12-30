@@ -1,5 +1,5 @@
 (function(exports) {
-  var process = { EventEmitter: function() {};
+  var process = { EventEmitter: function() {} };
   // Begin wrap of nodejs implementation of EventEmitter
 
   var EventEmitter = exports.EventEmitter = process.EventEmitter;
@@ -134,5 +134,5 @@
   };
 
   // End nodejs implementation
-}(typeof exports === 'undefined') ? window : exports));
+}((typeof exports === 'undefined') ? window : exports));
 

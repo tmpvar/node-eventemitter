@@ -10,6 +10,7 @@
   "repositories": {
     "type": "git",
     "url": "http://github.com/tmpvar/node-eventemitter.git"
-  }
+  },
+  "main": "index"
 }
 
