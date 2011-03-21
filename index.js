@@ -1,28 +1,27 @@
 (function(exports) {
   var process = { EventEmitter: function() {} };
-  var isArray = Array.isArray || function(obj){ return Object.prototype.toString.call(obj) === "[object Array]" };
-  var indexOf = (function(){
-    if (Array.prototype.indexOf !== undefined){
-        return function(array, item){
-            return array.indexOf(item);
-        };
-    }
-    else {
-        return function(array, item){
-            for ( var i = 0, length = array.length; i < length; i++ ) {
-                if ( array[ i ] === item ) {
-                    return i;
-                }
+  
+  if (typeof Array.isArray !== "function"){
+    Array.isArray = function(obj){ return Object.prototype.toString.call(obj) === "[object Array]" };
+  }
+  
+  if (!Array.prototype.indexOf){
+    Array.prototype.indexOf = function(item){
+        for ( var i = 0, length = this.length; i < length; i++ ) {
+            if ( this[ i ] === item ) {
+                return i;
             }
-
-            return -1;
         }
-    }
-  }());
+
+        return -1;
+    };
+  }
   
   // Begin wrap of nodejs implementation of EventEmitter
 
-  var EventEmitter = exports.EventEmitter = process.EventEmitter;  
+  var EventEmitter = exports.EventEmitter = process.EventEmitter;
+
+  var isArray = Array.isArray;
 
   EventEmitter.prototype.emit = function(type) {
     // If there is no 'error' event listener then throw.
@@ -124,7 +123,7 @@
     var list = this._events[type];
 
     if (isArray(list)) {
-      var i = indexOf(list, listener);
+      var i = list.indexOf(listener);
       if (i < 0) return this;
       list.splice(i, 1);
       if (list.length == 0)
