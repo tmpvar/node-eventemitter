@@ -1,10 +1,28 @@
 (function(exports) {
   var process = { EventEmitter: function() {} };
+  var isArray = Array.isArray || function(obj){ return Object.prototype.toString.call(obj) === "[object Array]" };
+  var indexOf = (function(){
+    if (Array.prototype.indexOf !== undefined){
+        return function(array, item){
+            return array.indexOf(item);
+        };
+    }
+    else {
+        return function(array, item){
+            for ( var i = 0, length = array.length; i < length; i++ ) {
+                if ( array[ i ] === item ) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+    }
+  }());
+  
   // Begin wrap of nodejs implementation of EventEmitter
 
-  var EventEmitter = exports.EventEmitter = process.EventEmitter;
-
-  var isArray = Array.isArray;
+  var EventEmitter = exports.EventEmitter = process.EventEmitter;  
 
   EventEmitter.prototype.emit = function(type) {
     // If there is no 'error' event listener then throw.
@@ -106,7 +124,7 @@
     var list = this._events[type];
 
     if (isArray(list)) {
-      var i = list.indexOf(listener);
+      var i = indexOf(list, listener);
       if (i < 0) return this;
       list.splice(i, 1);
       if (list.length == 0)
@@ -135,4 +153,3 @@
 
   // End nodejs implementation
 }((typeof exports === 'undefined') ? window : exports));
-
